@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Map;
 
 import jakarta.servlet.ServletException;
@@ -13,7 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/article/list")
+@WebServlet("/article/detail")
 public class ArticleDetailServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -21,7 +20,6 @@ public class ArticleDetailServlet extends HttpServlet {
 
 		response.setContentType("text/html;charset=UTF-8");
 
-		System.out.println(123);
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -38,17 +36,23 @@ public class ArticleDetailServlet extends HttpServlet {
 
 		try {
 			conn = DriverManager.getConnection(url, user, password);
-
+			response.getWriter().append("연결 성공");
+			
 			// DBUtil을 통해 데이터 가져오기
 			DBUtil dbUtil = new DBUtil(request, response);
-			String sql = "SELECT * FROM article;";
-			List<Map<String, Object>> articleRows = dbUtil.selectRows(conn, sql);
-
+			
+			int id = Integer.parseInt(request.getParameter("id"));
+			
+			String sql = String.format("SELECT * FROM article WHERE id = %d;", id);
+			
+			Map<String, Object> articleRow = dbUtil.selectRow(conn, sql);
+			
+			
 			// JSP에서 사용할 수 있도록 데이터를 담기
-			request.setAttribute("articleRows", articleRows);
+			request.setAttribute("articleRow", articleRow);
 
-			// list.jsp 화면으로 제어권을 넘기기. (포워딩)
-			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
+			// detail.jsp 화면으로 제어권을 넘기기. (포워딩)
+			request.getRequestDispatcher("/jsp/article/detail.jsp").forward(request, response);
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);
