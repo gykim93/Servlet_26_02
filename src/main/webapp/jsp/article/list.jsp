@@ -12,11 +12,11 @@ List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getA
 <html>
 <head>
 <meta charset="UTF-8">
-<title>article list</title>
+<title>게시글 목록</title>
 </head>
 <body>
 
-	<h2>게시글 목록</h2>
+	<h1>게시글 목록</h1>
 
 	<ul>
 		<li><%=articleRows.get(0).get("id")%>번, <%=articleRows.get(0).get("title")%>,

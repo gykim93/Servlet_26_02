@@ -5,54 +5,34 @@
 <%@page import="java.util.Map"%>
 
 <%
-List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getAttribute("articleRows");
+Map<String, Object> articleRow = (Map<String, Object>) request.getAttribute("articleRow");
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>article list</title>
+<title>게시글 상세보기</title>
 </head>
 <body>
-
-	<h2>게시글 목록</h2>
-
-	<ul>
-		<li><%=articleRows.get(0).get("id")%>번, <%=articleRows.get(0).get("title")%>,
-			<%=articleRows.get(0).get("body")%></li>
-		<li><%=articleRows.get(1).get("id")%>번, <%=articleRows.get(1).get("title")%>,
-			<%=articleRows.get(1).get("body")%></li>
-		<li><%=articleRows.get(2).get("id")%>번, <%=articleRows.get(2).get("title")%>,
-			<%=articleRows.get(2).get("body")%></li>
-	</ul>
-
-	<h2>게시글 목록 버전2</h2>
-	<ul>
-		<%
-		for (int i = 0; i < articleRows.size(); i++) {
-		%>
-		<li><%=articleRows.get(i).get("id")%>번, <%=articleRows.get(i).get("title")%>,
-			<%=articleRows.get(i).get("body")%></li>
-		<%
-		}
-		%>
-
-	</ul>
-
-	<h2>게시글 목록 버전3</h2>
-
-	<ul>
-		<%
-		for (Map<String, Object> articleRow : articleRows) {
-		%>
-		<li><%=articleRow.get("id")%>번, <%=articleRow.get("title")%>, <%=articleRow.get("body")%></li>
-		<%
-		}
-		%>
-
-	</ul>
-
-
+	<h1>게시글 상세보기</h1>
+	<div><%=articleRow%></div>
+	<br />
+	<div>
+		번호 :
+		<%=articleRow.get("id")%>
+	</div>
+	<div>
+		날짜 :
+		<%=articleRow.get("regDate")%>
+	</div>
+	<div>
+		제목 :
+		<%=articleRow.get("title")%>
+	</div>
+	<div>
+		내용 :
+		<%=articleRow.get("body")%>
+	</div>
 </body>
 </html>
