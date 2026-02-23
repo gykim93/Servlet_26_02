@@ -21,43 +21,37 @@ public class ArticleListServlet extends HttpServlet {
 
 		response.setContentType("text/html;charset=UTF-8");
 
-		
-		String driverName = "com.mysql.cj.jdbc.Driver";
+		System.out.println(123);
 
 		try {
-			Class.forName(driverName);
+			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
-			System.out.println("드라이버 클래스를 찾을 수 없습니다: " + e.getMessage());
-			return; // 드라이버가 없으면 더 이상 진행할 수 없으므로 종료
+			System.out.println("클래스 없음");
+			e.printStackTrace();
 		}
 
-		String url = "jdbc:mysql://127.0.0.1:3306/Spring_26_01?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul";
+		String url = "jdbc:mysql://127.0.0.1:3306/AM_jsp_2026_02?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul";
 		String user = "root";
 		String password = "";
 
 		Connection conn = null;
 
 		try {
-			// 2. DB 연결 시도
 			conn = DriverManager.getConnection(url, user, password);
-			
-			// 테스트를 위해 콘솔에도 출력
-			System.out.println("데이터베이스 연결 성공!");
 
-			// DBUtil 활용 
+			// DBUtil을 통해 데이터 가져오기
 			DBUtil dbUtil = new DBUtil(request, response);
 			String sql = "SELECT * FROM article;";
 			List<Map<String, Object>> articleRows = dbUtil.selectRows(conn, sql);
 
-			// 브라우저 화면에 결과 출력
-			response.getWriter().append("<h1>게시글 목록</h1>");
-			response.getWriter().append(articleRows.toString());
+			// JSP에서 사용할 수 있도록 데이터를 담기
+			request.setAttribute("articleRows", articleRows);
+
+			// list.jsp 화면으로 제어권을 넘기기. (포워딩)
+			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
 
 		} catch (SQLException e) {
-			// 3. 연결 실패 시 상세 에러 메시지 출력
-			System.out.println("데이터베이스 연결 실패!");
-			System.out.println("에러 내용 : " + e.getMessage());
-			response.getWriter().append("연결 실패: " + e.getMessage());
+			System.out.println("에러 : " + e);
 		} finally {
 			try {
 				if (conn != null && !conn.isClosed()) {
@@ -68,4 +62,5 @@ public class ArticleListServlet extends HttpServlet {
 			}
 		}
 	}
+
 }
