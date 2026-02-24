@@ -6,6 +6,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Map;
 
+import KoreaIT.SecSql;
+import KoreaIT.DBUtil;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -20,6 +23,7 @@ public class ArticleDetailServlet extends HttpServlet {
 
 		response.setContentType("text/html;charset=UTF-8");
 
+		System.out.println(123);
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -37,21 +41,20 @@ public class ArticleDetailServlet extends HttpServlet {
 		try {
 			conn = DriverManager.getConnection(url, user, password);
 			response.getWriter().append("연결 성공");
-			
-			// DBUtil을 통해 데이터 가져오기
+
 			DBUtil dbUtil = new DBUtil(request, response);
-			
+
 			int id = Integer.parseInt(request.getParameter("id"));
-			
-			String sql = String.format("SELECT * FROM article WHERE id = %d;", id);
-			
+
+			//String sql = String.format("SELECT * FROM article WHERE id = %d;", id);
+			SecSql sql = SecSql.from("SELECT *");
+			sql.append("FROM article");
+			sql.append("WHERE id = ?", id);
+
 			Map<String, Object> articleRow = dbUtil.selectRow(conn, sql);
-			
-			
-			// JSP에서 사용할 수 있도록 데이터를 담기
+
 			request.setAttribute("articleRow", articleRow);
 
-			// detail.jsp 화면으로 제어권을 넘기기. (포워딩)
 			request.getRequestDispatcher("/jsp/article/detail.jsp").forward(request, response);
 
 		} catch (SQLException e) {

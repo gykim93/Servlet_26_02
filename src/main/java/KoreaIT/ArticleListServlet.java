@@ -41,7 +41,11 @@ public class ArticleListServlet extends HttpServlet {
 
 			// DBUtil을 통해 데이터 가져오기
 			DBUtil dbUtil = new DBUtil(request, response);
-			String sql = "SELECT * FROM article;";
+			// String sql = "SELECT * FROM article;";
+			SecSql sql = SecSql.from("SELECT *");
+			sql.append("FROM article");
+			sql.append("ORDER BY id DESC");
+			
 			List<Map<String, Object>> articleRows = dbUtil.selectRows(conn, sql);
 
 			// JSP에서 사용할 수 있도록 데이터를 담기
