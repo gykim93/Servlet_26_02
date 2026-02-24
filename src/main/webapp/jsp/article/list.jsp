@@ -17,30 +17,9 @@ List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getA
 <body>
 
 	<h1>게시글 목록</h1>
-
-	<ul>
-		<li><%=articleRows.get(0).get("id")%>번, <%=articleRows.get(0).get("title")%>,
-			<%=articleRows.get(0).get("body")%></li>
-		<li><%=articleRows.get(1).get("id")%>번, <%=articleRows.get(1).get("title")%>,
-			<%=articleRows.get(1).get("body")%></li>
-		<li><%=articleRows.get(2).get("id")%>번, <%=articleRows.get(2).get("title")%>,
-			<%=articleRows.get(2).get("body")%></li>
-	</ul>
-
-	<h2>게시글 목록 버전2</h2>
-	<ul>
-		<%
-		for (int i = 0; i < articleRows.size(); i++) {
-		%>
-		<li><%=articleRows.get(i).get("id")%>번, <%=articleRows.get(i).get("title")%>,
-			<%=articleRows.get(i).get("body")%></li>
-		<%
-		}
-		%>
-
-	</ul>
-
-	<h2>게시글 목록 버전3</h2>
+	<a href="https://www.naver.com" target="_blank">네이버</a>
+	<a href="http://localhost:8080/gy_servlet/article/list" target="_blank">리스트 새탭</a>
+	<a href="http://localhost:8080/gy_servlet/article/detail" target="_blank">상세보기 새탭</a>
 
 	<ul>
 		<%
