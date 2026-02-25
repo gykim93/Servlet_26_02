@@ -50,8 +50,8 @@ public class ArticleDeleteServlet extends HttpServlet {
 			sql.append("WHERE id = ?", id);
 
 			DBUtil.delete(conn, sql);
-			response.getWriter()
-			.append(String.format("<script>alert('%d번 글이 삭제 되었습니다'); location.replace('list')</scrpit>", id));
+			
+			response.getWriter().append(String.format("<script>alert('%d번 글이 삭제 되었습니다'); location.replace('list')</script>", id));
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);
