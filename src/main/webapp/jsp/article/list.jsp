@@ -6,7 +6,12 @@
 
 <%
 List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getAttribute("articleRows");
+
+int cPage = (int) request.getAttribute("page"); // 현재 페이지 번호
+int totalCnt = (int) request.getAttribute("totalCnt"); // 전체 게시글 수
+int totalPage = (int) request.getAttribute("totalPage"); // 계산된 총 페이지 수
 %>
+
 
 <!DOCTYPE html>
 <html>
@@ -54,7 +59,29 @@ table>thead>tr>th, table>tbody>tr>td {
 
 		</tbody>
 	</table>
+	<style type="text/css">
+.page {
+	font-size: 1.4rem;
+}
 
+.page>a {
+	color: black;
+	text-decoration: none;
+}
 
+.page>a.cPage {
+	color: red;
+	text-decoration: underline;
+}
+</style>
+	<div class="page">
+		<%
+		for (int i = 1; i <= totalPage; i++) {
+		%>
+		<a class="<%=cPage == 1 ? "cPage" : ""%>" href="list?page=<%=i%>"><%=i%></a>
+		<%
+		}
+		%>
+	</div>
 </body>
 </html>
