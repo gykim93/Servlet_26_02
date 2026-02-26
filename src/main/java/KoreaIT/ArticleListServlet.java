@@ -38,18 +38,34 @@ public class ArticleListServlet extends HttpServlet {
 
 		try {
 			conn = DriverManager.getConnection(url, user, password);
-
-			// DBUtil을 통해 데이터 가져오기
+			
+			int page = 1;
+			if (request.getParameter("page") != null && request.getParameter("page").length() != 0) {
+				page = Integer.parseInt(request.getParameter("page"));
+			}
+			
+			int itemsInAPage = 10;
+			int limitFrom = (page - 1) * itemsInAPage;
+			
 			DBUtil dbUtil = new DBUtil(request, response);
-			// String sql = "SELECT * FROM article;";
-			SecSql sql = SecSql.from("SELECT *");
+
+			SecSql sql = SecSql.from("SELECT COUNT(*)");
+			sql.append("FROM article");
+			
+			int totalCnt = DBUtil.selectRowIntValue(conn, sql);
+			int totalPage = (int)Math.ceil(totalCnt / (double) itemsInAPage);
+			
+			sql = SecSql.from("SELECT *");
 			sql.append("FROM article");
 			sql.append("ORDER BY id DESC");
+			sql.append("LIMIT ?, ?;", limitFrom, itemsInAPage);
 			
 			List<Map<String, Object>> articleRows = dbUtil.selectRows(conn, sql);
 
-			// JSP에서 사용할 수 있도록 데이터를 담기
+			request.setAttribute("page", page);
 			request.setAttribute("articleRows", articleRows);
+			request.setAttribute("totalCnt", totalCnt);
+			request.setAttribute("totalPage", totalPage);
 
 			// list.jsp 화면으로 제어권을 넘기기. (포워딩)
 			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
