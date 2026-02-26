@@ -18,6 +18,8 @@ int totalPage = (int) request.getAttribute("totalPage"); // 계산된 총 페이
 <head>
 <meta charset="UTF-8">
 <title>게시글 목록</title>
+총 게시글 갯수 :
+<%=totalCnt%>
 <style>
 table>thead>tr>th, table>tbody>tr>td {
 	padding: 10px;
@@ -78,7 +80,7 @@ table>thead>tr>th, table>tbody>tr>td {
 		<%
 		for (int i = 1; i <= totalPage; i++) {
 		%>
-		<a class="<%=cPage == 1 ? "cPage" : ""%>" href="list?page=<%=i%>"><%=i%></a>
+		<a class="<%=cPage == i ? "cPage" : ""%>" href="list?page=<%=i%>"><%=i%></a>
 		<%
 		}
 		%>
