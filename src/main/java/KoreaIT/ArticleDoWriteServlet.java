@@ -41,17 +41,22 @@ public class ArticleDoWriteServlet extends HttpServlet {
 			conn = DriverManager.getConnection(url, user, password);
 			response.getWriter().append("연결 성공");
 
-			DBUtil dbUtil = new DBUtil(request, response);
+			//DBUtil dbUtil = new DBUtil(request, response);
 
-			int id = Integer.parseInt(request.getParameter("id"));
+			String title = request.getParameter("title");
+			String body = request.getParameter("body");
 
-			SecSql sql = SecSql.from("DELETE");
-			sql.append("FROM article");
-			sql.append("WHERE id = ?", id);
+			SecSql sql = SecSql.from("INSERT INTO article");
+			sql.append("SET regDate = NOW(),");
+			sql.append("updateDate = NOW(),");
+			sql.append("memberId = ?,", 1);
+			sql.append("title = ?,", title);
+			sql.append("`body` = ?", body);
 
-			DBUtil.delete(conn, sql);
+			int id = DBUtil.insert(conn, sql);
 			
-			response.getWriter().append(String.format("<script>alert('%d번 글이 삭제 되었습니다'); location.replace('list')</script>", id));
+			
+			response.getWriter().append(String.format("<script>alert('%d번 글이 작성 되었습니다'); location.replace('list')</script>", id));
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);
