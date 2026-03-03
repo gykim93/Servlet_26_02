@@ -12,7 +12,7 @@ table>thead>tr>th, table>tbody>tr>td {
 </style>
 </head>
 <body>
-	<a href="">메인으로 이동</a>
+	<a href="../home/main">메인으로 이동</a>
 	<h1>게시글 작성</h1>
 
 	<form action="doWrite" method="POST">

@@ -18,8 +18,7 @@ int totalPage = (int) request.getAttribute("totalPage"); // 계산된 총 페이
 <head>
 <meta charset="UTF-8">
 <title>게시글 목록</title>
-총 게시글 갯수 :
-<%=totalCnt%>
+
 <style>
 table>thead>tr>th, table>tbody>tr>td {
 	padding: 10px;
@@ -27,8 +26,10 @@ table>thead>tr>th, table>tbody>tr>td {
 </style>
 </head>
 <body>
-	<!-- <a href="../home/main">메인으로 이동</a>  -->
+	<a href="../home/main">메인으로 이동</a>
 	<h1>게시글 목록</h1>
+	총 게시글 갯수 :
+	<%=totalCnt%>
 	<table border="1"
 		style="border-collapse: collapse; border-color: green">
 		<thead>

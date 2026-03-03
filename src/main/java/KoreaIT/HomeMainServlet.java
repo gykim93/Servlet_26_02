@@ -7,11 +7,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/Home/Main")
+@WebServlet("/home/main")
 public class HomeMainServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.getWriter().append("HomeMain! ");
+		request.getRequestDispatcher("/jsp/home/main.jsp").forward(request, response);
 	}
 }
