@@ -41,20 +41,19 @@ public class ArticleDoModifyServlet extends HttpServlet {
 			response.getWriter().append("연결 성공");
 
 			int id = Integer.parseInt(request.getParameter("id"));
-			// DBUtil dbUtil = new DBUtil(request, response);
 
 			String title = request.getParameter("title");
 			String body = request.getParameter("body");
 
 			SecSql sql = SecSql.from("UPDATE article");
-			sql.append("SET title = ?,", title);
-			sql.append("`body` = ?,", body);
-			sql.append("WHERE id = ?,", id);
+			sql.append("SET title = ?", title);
+			sql.append(", `body` = ?", body);
+			sql.append("WHERE id = ?", id);
 
 			DBUtil.update(conn, sql);
 
 			response.getWriter().append(String
-					.format("<script>alert('%d번 글이 수정 되었습니다'); location.replace('detail?id=%id')</script>", id, id));
+					.format("<script>alert('%d번 글이 수정 되었습니다'); location.replace('detail?id=%d')</script>", id, id));
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);
