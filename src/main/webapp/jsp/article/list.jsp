@@ -39,6 +39,7 @@ table>thead>tr>th, table>tbody>tr>td {
 				<th>제목</th>
 				<th>내용</th>
 				<th>삭제</th>
+				<th>수정</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -55,6 +56,7 @@ table>thead>tr>th, table>tbody>tr>td {
 				<td><a
 					onclick="if(confirm('정말 삭제하시겠습니까?') == false) {return false;}"
 					href="doDelete?id=<%=articleRow.get("id")%>">delete</a></td>
+				<td><a href="modify?id=<%=articleRow.get("id")%>">edit</a></td>
 			</tr>
 			<%
 			}

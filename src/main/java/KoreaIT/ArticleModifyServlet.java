@@ -15,9 +15,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/article/doModify")
-public class ArticleDoWriteServlet extends HttpServlet {
-
+@WebServlet("/article/modify")
+public class ArticleModifyServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -40,21 +39,20 @@ public class ArticleDoWriteServlet extends HttpServlet {
 			conn = DriverManager.getConnection(url, user, password);
 			response.getWriter().append("연결 성공");
 
+			DBUtil dbUtil = new DBUtil(request, response);
+
 			int id = Integer.parseInt(request.getParameter("id"));
-			// DBUtil dbUtil = new DBUtil(request, response);
 
-			String title = request.getParameter("title");
-			String body = request.getParameter("body");
+			//String sql = String.format("SELECT * FROM article WHERE id = %d;", id);
+			SecSql sql = SecSql.from("SELECT *");
+			sql.append("FROM article");
+			sql.append("WHERE id = ?", id);
 
-			SecSql sql = SecSql.from("UPDATE article");
-			sql.append("SET title = ?,", title);
-			sql.append("`body` = ?,", body);
-			sql.append("WHERE id = ?,", id);
+			Map<String, Object> articleRow = dbUtil.selectRow(conn, sql);
 
-			DBUtil.update(conn, sql);
+			request.setAttribute("articleRow", articleRow);
 
-			response.getWriter().append(String
-					.format("<script>alert('%d번 글이 수정 되었습니다'); location.replace('detail?id=%id')</script>", id, id));
+			request.getRequestDispatcher("/jsp/article/modify.jsp").forward(request, response);
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);
@@ -67,11 +65,6 @@ public class ArticleDoWriteServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doGet(request, response);
 	}
 
 }
