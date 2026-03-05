@@ -54,10 +54,6 @@ SELECT * FROM `article`;
 	
 SELECT * FROM `member`;
 
-
-# 게시글 테이블에 memberId 추가
-ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER `updateDate`;
-
 # 테이블 구조확인
 DESC article;
 

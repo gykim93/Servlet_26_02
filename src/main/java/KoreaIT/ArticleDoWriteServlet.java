@@ -47,8 +47,6 @@ public class ArticleDoWriteServlet extends HttpServlet {
 
 			SecSql sql = SecSql.from("INSERT INTO article");
 			sql.append("SET regDate = NOW(),");
-			sql.append("updateDate = NOW(),");
-			sql.append("memberId = ?,", 1);
 			sql.append("title = ?,", title);
 			sql.append("`body` = ?", body);
 

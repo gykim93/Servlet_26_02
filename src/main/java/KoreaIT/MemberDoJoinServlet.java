@@ -38,7 +38,7 @@ public class MemberDoJoinServlet extends HttpServlet {
 
 		try {
 			conn = DriverManager.getConnection(url, user, password);
-			response.getWriter().append("연결 성공");
+			//response.getWriter().append("연결 성공");
 
 			String loginId = request.getParameter("loginId");
 			String loginPw = request.getParameter("loginPw");
@@ -46,20 +46,21 @@ public class MemberDoJoinServlet extends HttpServlet {
 
 			SecSql sql = SecSql.from("SELECT COUNT(*) AS cnt");
 			sql.append("FROM `member`");
-			sql.append("WHERE lgoinId = ?;", loginId);
+			sql.append("WHERE loginId = ?;", loginId);
 
 			boolean isJoinableLoginId = DBUtil.selectRowIntValue(conn, sql) == 0;
 
 			if (isJoinableLoginId == false) {
 				response.getWriter()
 						.append(String.format("<script>alert('%s는 이미 사용중!!'); history.back();</script>", loginId));
+				return;
 			}
 
 			sql = SecSql.from("INSERT INTO `member`");
-			sql.append("SET regDate = NOW()");
+			sql.append("SET regDate = NOW(),");
 			sql.append("loginId = ?,", loginId);
 			sql.append("loginPw = ?,", loginPw);
-			sql.append("name = ?,", name);
+			sql.append("name = ?", name);
 
 			int id = DBUtil.insert(conn, sql);
 
