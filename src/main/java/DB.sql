@@ -6,18 +6,16 @@ USE `AM_jsp_2026_02`;
 
 # 게시글 테이블 생성
 CREATE TABLE `article` (
-    `id` INT PRIMARY KEY AUTO_INCREMENT,
+    `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `regDate` DATETIME NOT NULL,
-    `updateDate` DATETIME NOT NULL,
     `title` CHAR(100) NOT NULL,
     `body` CHAR(100) NOT NULL
 );
 
 # 회원 테이블 생성
 CREATE TABLE `member`(
-	`id` INT PRIMARY KEY AUTO_INCREMENT,
+	`id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`regDate` DATETIME NOT NULL,
-	`updateDate` DATETIME NOT NULL,
 	`loginId` CHAR(100) NOT NULL,
 	`loginPw` CHAR(100) NOT NULL,
 	`name` CHAR(100) NOT NULL
@@ -26,33 +24,28 @@ CREATE TABLE `member`(
 # 게시글 데이터 삽입
 INSERT INTO `article`
 SET `regDate` = NOW(),
-	`updateDate` = NOW(),
 	`title` = '제목1',
 	`body` = '내용1';
 	
 INSERT INTO `article`
 SET `regDate` = NOW(),
-	`updateDate` = NOW(),
 	`title` = '제목2',
 	`body` = '내용2';
 
 INSERT INTO `article`
 SET `regDate` = NOW(),
-	`updateDate` = NOW(),
 	`title` = '제목3',
 	`body` = '내용3';
 
 # 회원 데이터 삽입
 INSERT INTO `member`
 SET `regDate` = NOW(),
-	`updateDate` = NOW(),
 	`loginId` = 'test1',
 	`loginPw` = 'test1',
 	`name` = '회원1';
 	
 INSERT INTO `member`
 SET `regDate` = NOW(),
-	`updateDate` = NOW(),
 	`loginId` = 'test2',
 	`loginPw` = 'test2',
 	`name` = '회원2';	
@@ -92,15 +85,12 @@ ON A.memberId = M.id;
 # article 생성(대량) => 해당 쿼리 실행 시 article 생성
 INSERT INTO article
 SET regDate = NOW(),
-updateDate = NOW(),
-memberId = 1,
 title = CONCAT('제목', SUBSTRING(RAND() * 1000 FROM 1 FOR 2)),
 `body` = CONCAT('내용', SUBSTRING(RAND() * 1000 FROM 1 FOR 2));
 
 # member 생성(대량) => 해당 쿼리 실행 시 member 생성
 INSERT INTO MEMBER
 SET regDate = NOW(),
-updateDate = NOW(),
 loginId = CONCAT('loginId', SUBSTRING(RAND() * 1000 FROM 1 FOR 2)),
 loginPw = CONCAT('loginPw', SUBSTRING(RAND() * 1000 FROM 1 FOR 2)),
 `name` = CONCAT('name', SUBSTRING(RAND() * 1000 FROM 1 FOR 2));
