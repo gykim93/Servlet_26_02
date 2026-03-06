@@ -22,4 +22,8 @@ public class ArticleWriteServlet extends HttpServlet {
 		request.getRequestDispatcher("/jsp/article/write.jsp").forward(request, response);
 	}
 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
 }
