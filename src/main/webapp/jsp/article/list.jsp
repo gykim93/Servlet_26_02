@@ -52,7 +52,7 @@ table>thead>tr>th, table>tbody>tr>td {
 	if (!isLogined) {
 	%>
 	<div>
-		<a href="../member/doLogout">로그인</a> 
+		<a href="../member/login">로그인</a> 
 	</div>
 	<%
 	}

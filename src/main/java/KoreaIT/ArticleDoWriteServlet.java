@@ -41,11 +41,11 @@ public class ArticleDoWriteServlet extends HttpServlet {
 
 			String title = request.getParameter("title");
 			String body = request.getParameter("body");
-			int loginMemberId = (int) session.getAttribute("loginMemberId");
+			int loginedMemberId = (int) session.getAttribute("loginedMemberId");
 			
 			SecSql sql = SecSql.from("INSERT INTO article");
 			sql.append("SET regDate = NOW(),");
-			sql.append("memberId = ?,", loginMemberId);
+			sql.append("memberId = ?,", loginedMemberId);
 			sql.append("title = ?,", title);
 			sql.append("`body` = ?", body);
 
