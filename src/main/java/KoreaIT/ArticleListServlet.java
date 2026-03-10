@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/article/list")
 public class ArticleListServlet extends HttpServlet {
@@ -61,6 +62,22 @@ public class ArticleListServlet extends HttpServlet {
 			sql.append("LIMIT ?, ?;", limitFrom, itemsInAPage);
 
 			List<Map<String, Object>> articleRows = dbUtil.selectRows(conn, sql);
+
+			HttpSession session = request.getSession();
+
+			boolean isLogined = false;
+			int loginedMemberId = -1;
+			Map<String, Object> loginedMemeber = null;
+
+			if (session.getAttribute("loginedMemberId") != null) {
+				isLogined = true;
+				loginedMemberId = (int) session.getAttribute("loginedMemberId");
+				loginedMemeber = (Map<String, Object>) session.getAttribute("loginedMemeber");
+			}
+
+			request.setAttribute("isLogined", isLogined);
+			request.setAttribute("loginedMemberId", loginedMemberId);
+			request.setAttribute("loginedMemeber", loginedMemeber);
 
 			request.setAttribute("page", page);
 			request.setAttribute("articleRows", articleRows);
