@@ -4,16 +4,13 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Map;
-
-import KoreaIT.SecSql;
-import KoreaIT.DBUtil;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/article/doWrite")
 public class ArticleDoWriteServlet extends HttpServlet {
@@ -38,15 +35,17 @@ public class ArticleDoWriteServlet extends HttpServlet {
 
 		try {
 			conn = DriverManager.getConnection(url, user, password);
-			response.getWriter().append("연결 성공");
-
+			//response.getWriter().append("연결 성공");
+			HttpSession session = request.getSession();
 			// DBUtil dbUtil = new DBUtil(request, response);
 
 			String title = request.getParameter("title");
 			String body = request.getParameter("body");
-
+			int loginMemberId = (int) session.getAttribute("loginMemberId");
+			
 			SecSql sql = SecSql.from("INSERT INTO article");
 			sql.append("SET regDate = NOW(),");
+			sql.append("memberId = ?,", loginMemberId);
 			sql.append("title = ?,", title);
 			sql.append("`body` = ?", body);
 

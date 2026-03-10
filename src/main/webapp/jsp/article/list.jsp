@@ -10,6 +10,10 @@ List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getA
 int cPage = (int) request.getAttribute("page"); // 현재 페이지 번호
 int totalCnt = (int) request.getAttribute("totalCnt"); // 전체 게시글 수
 int totalPage = (int) request.getAttribute("totalPage"); // 계산된 총 페이지 수
+
+boolean isLogined = (boolean) request.getAttribute("isLogined");
+int loginedMemberId = (int) request.getAttribute("loginedMemberId");
+Map<String, Object> loginedMember = (Map<String, Object>) request.getAttribute("loginedMember");
 %>
 
 
@@ -28,6 +32,31 @@ table>thead>tr>th, table>tbody>tr>td {
 <body>
 	<a href="../home/main">메인으로 이동</a>
 	<h1>게시글 목록</h1>
+	<div><%=loginedMemberId%>번 회원 로그인 상태
+	</div>
+	
+	<div><%=loginedMember%></div>
+	
+	<%
+	if (isLogined) {
+	%>
+	<div>
+		<a href="../member/doLogout">로그아웃</a> 
+		<a href="write">글쓰기</a>
+	</div>
+	<%
+	}
+	%>
+
+	<%
+	if (!isLogined) {
+	%>
+	<div>
+		<a href="../member/doLogout">로그인</a> 
+	</div>
+	<%
+	}
+	%>
 	총 게시글 갯수 :
 	<%=totalCnt%>
 	<table border="1"
