@@ -34,15 +34,14 @@ table>thead>tr>th, table>tbody>tr>td {
 	<h1>게시글 목록</h1>
 	<div><%=loginedMemberId%>번 회원 로그인 상태
 	</div>
-	
+
 	<div><%=loginedMember%></div>
-	
+
 	<%
 	if (isLogined) {
 	%>
 	<div>
-		<a href="../member/doLogout">로그아웃</a> 
-		<a href="write">글쓰기</a>
+		<a href="../member/doLogout">로그아웃</a> <a href="write">글쓰기</a>
 	</div>
 	<%
 	}
@@ -52,7 +51,7 @@ table>thead>tr>th, table>tbody>tr>td {
 	if (!isLogined) {
 	%>
 	<div>
-		<a href="../member/login">로그인</a> 
+		<a href="../member/login">로그인</a>
 	</div>
 	<%
 	}
@@ -65,6 +64,7 @@ table>thead>tr>th, table>tbody>tr>td {
 			<tr>
 				<th>번호</th>
 				<th>날짜</th>
+				<th>작성자</th>
 				<th>제목</th>
 				<th>내용</th>
 				<th>삭제</th>
@@ -79,6 +79,7 @@ table>thead>tr>th, table>tbody>tr>td {
 				<td><%=articleRow.get("id")%>번</td>
 				<td><%=articleRow.get("regDate")%></td>
 
+				<td><%=articleRow.get("name")%></td>
 				<td><a href="detail?id=<%=articleRow.get("id")%>"><%=articleRow.get("title")%></a></td>
 
 				<td><%=articleRow.get("body")%></td>
