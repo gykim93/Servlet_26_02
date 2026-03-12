@@ -139,3 +139,7 @@ FROM article;
 
 SELECT *
 FROM `member`;
+
+UPDATE article
+SET memberId = 1
+WHERE memberId NOT IN (SELECT id FROM `member`);
