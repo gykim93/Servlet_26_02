@@ -22,7 +22,6 @@ public class ArticleListServlet extends HttpServlet {
 
 		response.setContentType("text/html;charset=UTF-8");
 
-		System.out.println(123);
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
