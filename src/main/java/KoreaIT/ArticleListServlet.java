@@ -73,17 +73,17 @@ public class ArticleListServlet extends HttpServlet {
 
 			boolean isLogined = false;
 			int loginedMemberId = -1;
-			Map<String, Object> loginedMemeber = null;
+			Map<String, Object> loginedMember = null;
 
 			if (session.getAttribute("loginedMemberId") != null) {
 				isLogined = true;
 				loginedMemberId = (int) session.getAttribute("loginedMemberId");
-				loginedMemeber = (Map<String, Object>) session.getAttribute("loginedMemeber");
+				loginedMember = (Map<String, Object>) session.getAttribute("loginedMember");
 			}
 
 			request.setAttribute("isLogined", isLogined);
 			request.setAttribute("loginedMemberId", loginedMemberId);
-			request.setAttribute("loginedMemeber", loginedMemeber);
+			request.setAttribute("loginedMemeber", loginedMember);
 
 			request.setAttribute("page", page);
 			request.setAttribute("articleRows", articleRows);

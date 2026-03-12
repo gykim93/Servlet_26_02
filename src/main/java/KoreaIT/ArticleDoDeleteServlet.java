@@ -25,7 +25,7 @@ public class ArticleDoDeleteServlet extends HttpServlet {
 
 		if (session.getAttribute("loginedMemberId") == null) {
 			response.getWriter()
-					.append(String.format("<srcipt>alert('로그인 하고와'); location.replace('../member/login')</script>"));
+					.append(String.format("<srcipt>alert('로그인 하고와'); location.replace('../member/login');</script>"));
 			return;
 		}
 
@@ -51,24 +51,25 @@ public class ArticleDoDeleteServlet extends HttpServlet {
 			int id = Integer.parseInt(request.getParameter("id"));
 
 			// SecSql sql = SecSql.from("DELETE");
-			SecSql sql = SecSql.from("SELECT");
+			SecSql sql = SecSql.from("SELECT *");
 			sql.append("FROM article");
 			sql.append("WHERE id = ?", id);
 
 			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
-			
+
 			int loginedMemberId = (int) session.getAttribute("loginedMemberId");
-			
+
 			if (loginedMemberId != (int) articleRow.get("memberId")) {
-				response.getWriter().append(String.format("<script>alert('%d번 글에 대한 권한 없음'); location.replace('list');)</script>", id));
-				
+				response.getWriter().append(
+						String.format("<script>alert('%d번 글에 대한 권한 없음'); location.replace('list');</script>", id));
+
 				return;
 			}
 
 			sql = SecSql.from("DELETE");
 			sql.append("FROM article");
 			sql.append("WHERE id = ?", id);
-			
+
 			DBUtil.delete(conn, sql);
 
 			response.getWriter()
