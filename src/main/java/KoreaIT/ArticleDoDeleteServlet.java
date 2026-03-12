@@ -25,7 +25,7 @@ public class ArticleDoDeleteServlet extends HttpServlet {
 
 		if (session.getAttribute("loginedMemberId") == null) {
 			response.getWriter()
-					.append(String.format("<srcipt>alert('로그인 하고와'); location.replace('../member/login');</script>"));
+					.append(String.format("<script>alert('로그인 하고와'); location.replace('../member/login');</script>"));
 			return;
 		}
 
