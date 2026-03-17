@@ -79,7 +79,7 @@ public class DispatcherServlet extends HttpServlet {
 					articleController.showDetail();
 					break;
 				case "doDelete":
-					articleController.deDelete();
+					articleController.doDelete();
 					break;		
 				case "modify":
 					articleController.showModify();

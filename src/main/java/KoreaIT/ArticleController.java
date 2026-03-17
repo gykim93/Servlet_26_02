@@ -91,9 +91,9 @@ public class ArticleController {
 		request.getRequestDispatcher("/jsp/article/detail.jsp").forward(request, response);
 	}
 
-	public void deDelete() throws IOException {
+	public void doDelete() throws IOException {
 		if (!isLogined()) {
-			response.getWriter().append("<script>alert('로그인을 하고오세요'); location.replace('../member/login');)</script>");
+			response.getWriter().append("<script>alert('로그인을 하고오세요'); location.replace('../member/login');</script>");
 			return;
 		}
 		int id = Integer.parseInt(request.getParameter("id"));
@@ -120,12 +120,12 @@ public class ArticleController {
 		DBUtil.delete(conn, sql);
 
 		response.getWriter()
-				.append(String.format("<script>alert('%d번 글이 삭제 되었습니다'); location.replace('list')</script>", id));
+				.append(String.format("<script>alert('%d번 글이 삭제 되었습니다'); location.replace('list');</script>", id));
 	}
 
 	public void doModify() throws IOException {
 		if (!isLogined()) {
-			response.getWriter().append("<script>alert('로그인을 하고오세요'); location.replace('../member/login');)</script>");
+			response.getWriter().append("<script>alert('로그인을 하고오세요'); location.replace('../member/login');</script>");
 			return;
 		}
 		int id = Integer.parseInt(request.getParameter("id"));
@@ -141,13 +141,13 @@ public class ArticleController {
 		DBUtil.update(conn, sql);
 
 		response.getWriter().append(
-				String.format("<script>alert('%d번 글이 수정 되었습니다'); location.replace('detail?id=%d')</script>", id, id));
+				String.format("<script>alert('%d번 글이 수정 되었습니다'); location.replace('detail?id=%d');</script>", id, id));
 
 	}
 
 	public void doWrite() throws IOException {
 		if (!isLogined()) {
-			response.getWriter().append("<script>alert('로그인을 하고오세요'); location.replace('../member/login');)</script>");
+			response.getWriter().append("<script>alert('로그인을 하고오세요'); location.replace('../member/login');</script>");
 			return;
 		}
 		String title = request.getParameter("title");
@@ -163,12 +163,12 @@ public class ArticleController {
 		int id = DBUtil.insert(conn, sql);
 
 		response.getWriter()
-				.append(String.format("<script>alert('%d번 글이 작성 되었습니다'); location.replace('list')</script>", id));
+				.append(String.format("<script>alert('%d번 글이 작성 되었습니다'); location.replace('list');</script>", id));
 	}
 
 	public void showModify() throws IOException, ServletException {
 		if (!isLogined()) {
-			response.getWriter().append("<script>alert('로그인을 하고오세요'); location.replace('../member/login');)</script>");
+			response.getWriter().append("<script>alert('로그인을 하고오세요'); location.replace('../member/login');</script>");
 			return;
 		}
 
@@ -194,7 +194,7 @@ public class ArticleController {
 
 	public void showWrite() throws IOException, ServletException {
 		if (!isLogined()) {
-			response.getWriter().append("<script>alert('로그인을 하고오세요'); location.replace('../member/login');)</script>");
+			response.getWriter().append("<script>alert('로그인을 하고오세요'); location.replace('../member/login');</script>");
 			return;
 		}
 		request.getRequestDispatcher("/jsp/article/write.jsp").forward(request, response);
