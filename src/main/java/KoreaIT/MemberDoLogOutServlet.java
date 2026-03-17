@@ -44,7 +44,7 @@ public class MemberDoLogOutServlet extends HttpServlet {
 			session.removeAttribute("loginedMemberLoginId");
 
 			response.getWriter()
-					.append(String.format("<script>alert('로그아웃!'); location.replace('../article/list');</script>"));
+					.append(String.format("<script>alert('로그아웃!'); location.replace('../s/article/list');</script>"));
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);

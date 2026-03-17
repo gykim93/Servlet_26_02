@@ -56,19 +56,45 @@ public class DispatcherServlet extends HttpServlet {
 
 			String[] reqUriBits = requestUri.split("/");
 
-			if (reqUriBits.length < 5) { //주소가 너무 짧다면? ex) /s/article << 쳐낸다.
+			if (reqUriBits.length < 5) { // 주소가 너무 짧다면? ex) /s/article << 쳐낸다.
 				response.getWriter().append(
 						String.format("<script>alert('올바른 요청이 아님'); location.replace('../home/main');</script>"));
 				return;
 			}
-			String controllerName = reqUriBits[3]; //article, member
+			String controllerName = reqUriBits[3]; // article, member
 			String actionMethodName = reqUriBits[4]; // list, write, login
-			if (controllerName.equals("article")) {
+			if (controllerName.equals("home")) {
+				HomeController homeController = new HomeController(request, response, conn);
+
+				homeController.showMain();
+
+			} else if (controllerName.equals("article")) {
 				ArticleController articleController = new ArticleController(request, response, conn);
 				
-				if (actionMethodName.equals("list")) {
+				switch (actionMethodName) {
+				case "list":
 					articleController.showList();
+					break;
+				case "detail":
+					articleController.showDetail();
+					break;
+				case "doDelete":
+					articleController.deDelete();
+					break;		
+				case "modify":
+					articleController.showModify();
+					break;	
+				case "doModify":
+					articleController.doModify();
+					break;		
+				case "write":
+					articleController.showWrite();
+					break;	
+				case "doWrite":
+					articleController.doWrite();
+					break;					
 				}
+				
 			}
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);

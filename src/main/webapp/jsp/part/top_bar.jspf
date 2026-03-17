@@ -13,6 +13,7 @@ if (isLogined) {
 %>
 <div>
 	<a href="../member/doLogout">로그아웃</a>
+	<a href="../article/write">글쓰기</a>
 </div>
 <%
 }

@@ -56,7 +56,7 @@ public class MemberDoLoginServlet extends HttpServlet {
 
 			if (memberRow.get("loginPw").equals(loginPw) == false) {
 				response.getWriter().append(String.format(
-						"<script>alert('패스워드가 틀렸습니다.'); location.replace('../member/login');</script>", loginId));
+						"<script>alert('패스워드가 틀렸습니다.'); location.replace('../member/login');</script>"));
 				return;
 			}
 			// 로그인 기능 구현중 핵심.
@@ -66,7 +66,7 @@ public class MemberDoLoginServlet extends HttpServlet {
 			session.setAttribute("loginedMemberLoginId", memberRow.get("loginId"));
 
 			response.getWriter()
-					.append(String.format("<script>alert('%s님 로그인 성공!'); location.replace('../article/list');</script>",
+					.append(String.format("<script>alert('%s님 로그인 성공!'); location.replace('../s/article/main');</script>",
 							memberRow.get("name")));
 
 		} catch (SQLException e) {
