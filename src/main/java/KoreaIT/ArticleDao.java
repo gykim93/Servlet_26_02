@@ -1,6 +1,7 @@
 package KoreaIT;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,16 +12,8 @@ public class ArticleDao {
 		this.conn = conn;
 	}
 	// 전체 게시글 수 구하기(컨트롤러에서 서비스로 넘어옴)
-	public int getTotalCnt() {
-		SecSql sql = SecSql.from("SELECT COUNT(*)");
-		sql.append("FROM article");
-
-		return DBUtil.selectRowIntValue(conn, sql);
-	}
-	// 리스트에 보여줄 게시글 가져오기(컨트롤러에서 서비스로 넘어옴)
-	// 컨트롤러가 계산해준 limitFrom, itemsInAPage를 매개변수로 받아서 쿼리에 넣어준다.
-	// 이렇게 함으로써 이제 DB관련 에러가 나오면 => Service쪽으로 와서 보면된다.
-	public List<Map<String, Object>> getForPrintArticles(int limitFrom, int itemsInAPage) {
+	
+	public List<Article> getForPrintArticles(int limitFrom, int itemsInAPage) {
 		SecSql sql = SecSql.from("SELECT COUNT(*)");
 		sql.append("FROM article");
 
@@ -33,6 +26,20 @@ public class ArticleDao {
 		sql.append("ON A.memberId = M.id");
 		sql.append("ORDER BY A.id DESC");
 		sql.append("LIMIT ?, ?", limitFrom, itemsInAPage);
-		return DBUtil.selectRows(conn, sql);
+		
+		List<Map<String, Object>> articleRows = DBUtil.selectRows(conn, sql);
+		
+		List<Article> articles = new ArrayList<>();
+		
+		for (Map<String, Object> articleMap : articleRows) {
+			articles.add(new Article(articleMap));
+		}
+		return articles;
+	}
+	public int getTotalCnt() {
+		SecSql sql = SecSql.from("SELECT COUNT(*)");
+		sql.append("FROM article;");
+		
+		return DBUtil.selectRowIntValue(conn, sql);
 	}
 }

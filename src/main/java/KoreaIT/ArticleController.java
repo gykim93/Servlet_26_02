@@ -8,7 +8,6 @@ import java.util.Map;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 public class ArticleController {
 	private HttpServletRequest request;
@@ -48,10 +47,10 @@ public class ArticleController {
 		int totalCnt = articleService.getTotalCnt();
 		int totalPage = (int) Math.ceil(totalCnt / (double) itemsInAPage);
 
-		List<Map<String, Object>> articleRows = articleService.getForPrintArticles(limitFrom, itemsInAPage);
+		List<Article> articles = articleService.getForPrintArticles(limitFrom, itemsInAPage);
 
 		request.setAttribute("page", page);
-		request.setAttribute("articleRows", articleRows);
+		request.setAttribute("articles", articles);
 		request.setAttribute("totalCnt", totalCnt);
 		request.setAttribute("totalPage", totalPage);
 

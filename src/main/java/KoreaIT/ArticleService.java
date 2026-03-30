@@ -17,7 +17,7 @@ public class ArticleService {
 	public int getTotalCnt() {
 		return articleDao.getTotalCnt();
 	}
-	public List<Map<String, Object>> getForPrintArticles(int limitFrom, int itemsInAPage) {
+	public List<Article> getForPrintArticles(int limitFrom, int itemsInAPage) {
 		return articleDao.getForPrintArticles(limitFrom, itemsInAPage);
 	}
 }
