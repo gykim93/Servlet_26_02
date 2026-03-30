@@ -2,7 +2,7 @@ package KoreaIT;
 
 import java.time.LocalDateTime;
 import java.util.Map;
-
+// DTO 구조 추가
 public class Article {
 	private int id;
 	private LocalDateTime regDate;
